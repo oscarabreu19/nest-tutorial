@@ -1,8 +1,13 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { Logger } from '@nestjs/common';
+import { AppModule } from './app/app.module';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+async function bootstrap(Logger) {
+    const port = 3000;
+    const app = await NestFactory.create(AppModule);
+    await app.listen(port);
+    Logger.log(`Port: ${port}`);
 }
-bootstrap();
+
+const logger = new Logger(bootstrap.name);
+bootstrap(logger);
